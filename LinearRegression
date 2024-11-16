@@ -1,0 +1,12 @@
+from sklearn.linear_model import LinearRegression
+data = {
+    'Size': [500, 600, 700, 800],
+    'Rent': [3000, 3500, 4000, 4500]
+}
+df = pd.DataFrame(data)
+X = df[['Size']]
+y = df['Rent']
+model = LinearRegression()
+model.fit(X, y)
+predicted = model.predict([[750]])
+print("Predicted Rent for size 750:", predicted[0])

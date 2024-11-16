@@ -1,0 +1,7 @@
+import numpy as np
+
+# Broadcasting example
+array = np.array([1, 2, 3])
+scalar = 5
+result = array + scalar  # Broadcast scalar addition
+print("Result of Broadcasting:", result)

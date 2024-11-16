@@ -1,0 +1,8 @@
+from scipy.stats import ttest_1samp, ttest_rel
+data = [2.3, 1.9, 2.7, 2.0, 2.5]
+t_stat, p_value = ttest_1samp(data, popmean=2)
+print("T-Test: t-statistic =", t_stat, ", p-value =", p_value)
+data1 = [2.5, 2.6, 2.8, 2.9, 3.0]
+data2 = [2.3, 2.4, 2.5, 2.7, 2.8]
+t_stat, p_value = ttest_rel(data1, data2)
+print("Paired T-Test: t-statistic =", t_stat, ", p-value =", p_value)

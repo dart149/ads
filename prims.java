@@ -1,64 +1,43 @@
+import java.util.PriorityQueue;
 import java.util.*;
 
-class Pair {
+class Pair{
     int node;
-    int distance;
-
-    public Pair(int distance, int node) {
-        this.node = node;
-        this.distance = distance;
+    int weight;
+    Pair(int node,int weight){
+        this.node=node;
+        this.weight=weight;
     }
 }
-
-public class Main {
-    // Function to find sum of weights of edges of the Minimum Spanning Tree using Prim's Algorithm
-    static int spanningTree(int V, int[][] adjMatrix) {
-        // Priority queue to pick the edge with the minimum weight
-        PriorityQueue<Pair> pq = new PriorityQueue<>((x, y) -> x.distance - y.distance);
-
-        // Visited array to keep track of nodes already included in MST
-        int[] vis = new int[V];
-
-        // Parent array to store the parent of each node in MST
-        int[] parent = new int[V];
-        Arrays.fill(parent, -1);
-
-        // Add the starting node (node 0) with weight 0
+public class prims {
+    public static int spanningTree(int[][] adjmat,int n){
+        PriorityQueue<Pair> pq = new PriorityQueue<>((x,y)->x.weight-y.weight);
         pq.add(new Pair(0, 0));
-
-        int sum = 0; // Variable to store sum of weights in MST
-
-        while (!pq.isEmpty()) {
-            int wt = pq.peek().distance;
-            int node = pq.peek().node;
-            pq.remove();
-
-            // If the node is already visited, continue to next
-            if (vis[node] == 1) continue;
-
-            // Include the node in MST
-            vis[node] = 1;
-            sum += wt;
-
-            // Print the edge if the node has a valid parent
-            if (parent[node] != -1) {
-                System.out.println("Edge: " + parent[node] + " - " + node + " with weight: " + wt);
-            }
-
-            // Check all adjacent nodes of the current node
-            for (int adjNode = 0; adjNode < V; adjNode++) {
-                int edgeWeight = adjMatrix[node][adjNode];
-
-                // If there's an edge and the adjacent node is not visited, add to priority queue
-                if (edgeWeight != 0 && vis[adjNode] == 0) {
-                    pq.add(new Pair(edgeWeight, adjNode));
-                    parent[adjNode] = node; // Set the parent of adjNode as the current node
-                }
-            }
-        }
-
-        return sum; // Return the sum of weights in MST
+        int[] parent = new int[n];
+        Arrays.fill(parent,-1);
+        int[] vis = new int[n];
+        int sum=0;
+        while(!pq.isEmpty()){
+         int node = pq.peek().node;
+         int weight = pq.peek().weight;
+         pq.remove();
+         if(vis[node]==1) continue;
+         vis[node]=1;
+         sum+=weight;
+         if(parent[node]!=-1){
+             System.out.println(parent[node]+" - "+node);
+         }
+         for(int i=0;i<n;i++){
+             int edgwt = adjmat[node][i];
+             if(edgwt!=0 && vis[i]==0){
+                 pq.add(new Pair(i, edgwt));
+                 parent[i]=node;
+             }
+         }
+       
     }
+    return sum;
+}
 
     public static void main(String[] args) {
         int V = 5; // Number of vertices
@@ -70,7 +49,7 @@ public class Main {
             {0, 5, 7, 9, 0}
         };
         
-        int totalWeight = spanningTree(V, adjMatrix);
+        int totalWeight = spanningTree(adjMatrix,V);
         System.out.println("Sum of weights of edges in the Minimum Spanning Tree: " + totalWeight);
     }
 }
